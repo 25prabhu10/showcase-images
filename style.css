@@ -1,0 +1,80 @@
+:root {
+  /* Take up 6 "segments" on :hover */
+  --magnifier: 6;
+}
+
+.container {
+  --count: 5;
+  width: 80vw;
+  height: 50vmin;
+  display: flex;
+}
+
+img {
+  /* A default width of 100% / "count".
+     If we have 5 cards, 20% */
+  --width: calc(100% / var(--count));
+  width: var(--width);
+  height: 100%;
+}
+
+/* On container :hover set the --width based on an increased cont */
+.container:hover {
+  --width: calc(100% / (var(--count) + (var(--magnifier) / 2)));
+}
+
+/* On img :hover increase the --width to take the extra "segments" */
+.container img:hover {
+  --width: calc(
+    (100% / (var(--count) + (var(--magnifier) / 2))) * var(--magnifier)
+  );
+}
+
+@import "https://unpkg.com/open-props";
+@import "https://unpkg.com/open-props/normalize.min.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: var(--gradient-9);
+}
+
+:root {
+  --magnifier: 6;
+  --gap: 1vmin;
+  --transition: 0.5s;
+}
+
+.container {
+  width: 80vw;
+  height: 50vmin;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap);
+}
+
+img,
+.container:hover img:focus {
+  --brightness: 0.75;
+  --grayscale: 1;
+  transition: flex var(--transition), filter var(--transition);
+  height: 100%;
+  filter: grayscale(var(--grayscale)) brightness(var(--brightness));
+  object-fit: cover;
+  overflow: hidden;
+  flex: 1;
+}
+
+img:focus,
+.container:hover img:focus:hover,
+img:hover {
+  --brightness: 1.15;
+  --grayscale: 0;
+  flex: var(--magnifier);
+}
